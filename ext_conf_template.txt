@@ -1,0 +1,2 @@
+# cat=basic; type=string; label=Tables
+tables = pages,sys_category

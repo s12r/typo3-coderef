@@ -1,0 +1,20 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  SomeBdyElse\Coderef\Configuration\CoderefConfigurationService:
+    public: true
+  SomeBdyElse\Coderef\Configuration\TcaService:
+    tags:
+      - name: event.listener
+        identifier: 'coderef-tca-fields'
+        method: 'addCoderefTcaFields'
+        event: TYPO3\CMS\Core\Configuration\Event\AfterTcaCompilationEvent
+  SomeBdyElse\Coderef\Database\DatabaseSchemaService:
+    tags:
+      - name: event.listener
+        identifier: 'coderef-database-fields'
+        method: 'addCoderefDatabaseFields'
+        event: TYPO3\CMS\Core\Database\Event\AlterTableDefinitionStatementsEvent
