@@ -15,5 +15,10 @@
     "psr-4": {
       "SomeBdyElse\\Coderef\\": "Classes/"
     }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "coderef"
+    }
   }
 }
