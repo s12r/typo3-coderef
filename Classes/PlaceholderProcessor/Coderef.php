@@ -19,6 +19,12 @@ class Coderef implements PlaceholderProcessorInterface
     {
         [$table, $coderef] = explode(':', $value);
 
+        // TODO v12: Interim fix for "Table 'app.pages' doesn't exist" TableNotFoundException during
+        //      database:updateschema call on empty database
+        if (!$this->tableExists($table)) {
+            return null;
+        }
+
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
         $uid = $queryBuilder
             ->select('uid')
@@ -33,5 +39,13 @@ class Coderef implements PlaceholderProcessorInterface
         }
 
         return $uid;
+    }
+
+    protected function tableExists(string $tableName): bool
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable($tableName)
+            ->getSchemaManager()
+            ->tablesExist([$tableName]);
     }
 }
